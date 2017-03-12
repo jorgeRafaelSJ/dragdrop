@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 	    },
 	    dist: {
 	        files: {
-	            'main.js': 'dev.js'
+	            './js/main.js': './js/dev.js'
 	        }
 	    }
 	  }
