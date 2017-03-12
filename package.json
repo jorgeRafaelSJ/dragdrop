@@ -9,6 +9,7 @@
   "author": "Jorge Suarez",
   "license": "ISC",
   "dependencies": {
+    "babel-preset-es2015": "^6.22.0",
     "grunt": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0"
   }
