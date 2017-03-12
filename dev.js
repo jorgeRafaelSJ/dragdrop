@@ -27,13 +27,12 @@ let draggedImage;
 let draggedImageIndex;
 
 /*=======================================================================
-placeInitalImages will loop through the links array, create img tags,
-set all the necessary attributes and append to #image-grid
+This self invoked function will loop through the links array, create img tags,
+set all the necessary attributes, and append to #image-grid on page load.
 ========================================================================*/
 
-const placeInitialImages = (links) => {
-
-	links.forEach((link, index) => {
+(() => {
+	imageLinks.forEach((link, index) => {
 		let imageGrid = document.getElementById('image-grid');
 		let img = document.createElement('img');
 		
@@ -48,25 +47,23 @@ const placeInitialImages = (links) => {
 
 		imageGrid.appendChild(img);
 	});
-};
-
-/***** FUNCTION CALLED ON LOAD *****/
-placeInitialImages(imageLinks);
+})();
 
 /*=======================================================================
-
+Reorders Images with new array order passed in parameter
 ========================================================================*/
 
 const reorderImages = (links) => {
-		
-		links.forEach((link, index) => {
+	links.forEach((link, index) => {
 		let element = document.getElementById(`image-${index + 1}`);
 		element.src = link;
 	});
 }
 
 /*=======================================================================
+Called ondrag - sets draggedImage string and draggedImageIndex
 
+These variables are used to modify array on the dropImg() function
 ========================================================================*/
 
 const dragImg = (event) => {
@@ -76,7 +73,8 @@ const dragImg = (event) => {
 };
 
 /*=======================================================================
-
+On drop event, it will remove the draggedImage from its old placement.
+Will insert the dragged image into its new place in the array
 ========================================================================*/
 
 const dropImg = (event) => {
@@ -91,13 +89,13 @@ const dropImg = (event) => {
 };
 
 /*=======================================================================
-
+Only needed to prevent default and allow dropping
 ========================================================================*/
 
 const dragOver = (event) => { event.preventDefault() };
 
 /*=======================================================================
-
+Only needed to prevent default and allow dropping
 ========================================================================*/
 
 const dragEnter = (event) => { event.preventDefault() };

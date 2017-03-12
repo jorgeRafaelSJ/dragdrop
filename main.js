@@ -17,13 +17,12 @@ var draggedImage = void 0;
 var draggedImageIndex = void 0;
 
 /*=======================================================================
-placeInitalImages will loop through the links array, create img tags,
-set all the necessary attributes and append to #image-grid
+This self invoked function will loop through the links array, create img tags,
+set all the necessary attributes, and append to #image-grid on page load.
 ========================================================================*/
 
-var placeInitialImages = function placeInitialImages(links) {
-
-	links.forEach(function (link, index) {
+(function () {
+	imageLinks.forEach(function (link, index) {
 		var imageGrid = document.getElementById('image-grid');
 		var img = document.createElement('img');
 
@@ -38,17 +37,13 @@ var placeInitialImages = function placeInitialImages(links) {
 
 		imageGrid.appendChild(img);
 	});
-};
-
-/***** FUNCTION CALLED ON LOAD *****/
-placeInitialImages(imageLinks);
+})();
 
 /*=======================================================================
-
+Reorders Images with new array order passed in parameter
 ========================================================================*/
 
 var reorderImages = function reorderImages(links) {
-
 	links.forEach(function (link, index) {
 		var element = document.getElementById('image-' + (index + 1));
 		element.src = link;
@@ -56,7 +51,9 @@ var reorderImages = function reorderImages(links) {
 };
 
 /*=======================================================================
+Called ondrag - sets draggedImage string and draggedImageIndex
 
+These variables are used to modify array on the dropImg() function
 ========================================================================*/
 
 var dragImg = function dragImg(event) {
@@ -66,7 +63,8 @@ var dragImg = function dragImg(event) {
 };
 
 /*=======================================================================
-
+On drop event, it will remove the draggedImage from its old placement.
+Will insert the dragged image into its new place in the array
 ========================================================================*/
 
 var dropImg = function dropImg(event) {
@@ -81,7 +79,7 @@ var dropImg = function dropImg(event) {
 };
 
 /*=======================================================================
-
+Only needed to prevent default and allow dropping
 ========================================================================*/
 
 var dragOver = function dragOver(event) {
@@ -89,7 +87,7 @@ var dragOver = function dragOver(event) {
 };
 
 /*=======================================================================
-
+Only needed to prevent default and allow dropping
 ========================================================================*/
 
 var dragEnter = function dragEnter(event) {
