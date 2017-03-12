@@ -19,6 +19,11 @@ const imageLinks = [
 /*=======================================================================
 
 ========================================================================*/
+let draggedImage;
+let draggedImageIndex;
+/*=======================================================================
+
+========================================================================*/
 
 const placeImages = (links) => {
 	links.forEach((link, index) => {
@@ -35,6 +40,8 @@ placeImages(imageLinks);
 
 const dragImg = (event) => {
 	console.log('hello', event);
+	draggedImage = event.target.attributes.src.value;
+	draggedImageIndex = event.target.id.match(/[0-9]+/)[0] - 1;
 };
 
 /*=======================================================================
@@ -44,6 +51,13 @@ const dragImg = (event) => {
 const dropImg = (event) => {
 	event.preventDefault();
 	console.log('goodbye', event);
+	console.log(draggedImage);
+	let dropTargetIndex = event.target.id.match(/[0-9]+/)[0] - 1;
+	console.log(dropTargetIndex);
+
+	imageLinks.splice(draggedImageIndex, 1);
+	imageLinks.splice(dropTargetIndex, 0, draggedImage);
+	placeImages(imageLinks);
 };
 
 /*=======================================================================
@@ -51,7 +65,6 @@ const dropImg = (event) => {
 ========================================================================*/
 
 const dragOver = (event) => {
-	console.log('ondragover');
 	event.preventDefault();
 };
 
@@ -60,6 +73,5 @@ const dragOver = (event) => {
 ========================================================================*/
 
 const dragEnter = (event) => {
-	console.log('ondragenter');
 	event.preventDefault();
 };

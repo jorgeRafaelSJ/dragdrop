@@ -9,6 +9,11 @@ var imageLinks = ['./images/1.png', './images/2.png', './images/3.png', './image
 /*=======================================================================
 
 ========================================================================*/
+var draggedImage = void 0;
+var draggedImageIndex = void 0;
+/*=======================================================================
+
+========================================================================*/
 
 var placeImages = function placeImages(links) {
 	links.forEach(function (link, index) {
@@ -25,6 +30,8 @@ placeImages(imageLinks);
 
 var dragImg = function dragImg(event) {
 	console.log('hello', event);
+	draggedImage = event.target.attributes.src.value;
+	draggedImageIndex = event.target.id.match(/[0-9]+/)[0] - 1;
 };
 
 /*=======================================================================
@@ -34,6 +41,13 @@ var dragImg = function dragImg(event) {
 var dropImg = function dropImg(event) {
 	event.preventDefault();
 	console.log('goodbye', event);
+	console.log(draggedImage);
+	var dropTargetIndex = event.target.id.match(/[0-9]+/)[0] - 1;
+	console.log(dropTargetIndex);
+
+	imageLinks.splice(draggedImageIndex, 1);
+	imageLinks.splice(dropTargetIndex, 0, draggedImage);
+	placeImages(imageLinks);
 };
 
 /*=======================================================================
@@ -41,7 +55,6 @@ var dropImg = function dropImg(event) {
 ========================================================================*/
 
 var dragOver = function dragOver(event) {
-	console.log('ondragover');
 	event.preventDefault();
 };
 
@@ -50,7 +63,6 @@ var dragOver = function dragOver(event) {
 ========================================================================*/
 
 var dragEnter = function dragEnter(event) {
-	console.log('ondragenter');
 	event.preventDefault();
 };
 //# sourceMappingURL=main.js.map
