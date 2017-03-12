@@ -1,8 +1,10 @@
 /*=======================================================================
-
+Image array that loads them in order
+changing the order of this array and calling placeImages 
+will reorder images in the DOM to the array's current order. 
 ========================================================================*/
 
-const imageLinks = [
+let imageLinks = [
 	'./images/1.png',
 	'./images/2.png',
 	'./images/3.png',
@@ -17,29 +19,58 @@ const imageLinks = [
 	'./images/12.png'];
 
 /*=======================================================================
-
+These two variables are necessary to record the image 
+being dragged. In the function 'dragImg()' they will be set.
 ========================================================================*/
+
 let draggedImage;
 let draggedImageIndex;
+
+/*=======================================================================
+placeInitalImages will loop through the links array, create img tags,
+set all the necessary attributes and append to #image-grid
+========================================================================*/
+
+const placeInitialImages = (links) => {
+
+	links.forEach((link, index) => {
+		let imageGrid = document.getElementById('image-grid');
+		let img = document.createElement('img');
+		
+		img.setAttribute('id', `image-${index + 1}`);
+		img.setAttribute('class', 'image');
+		img.setAttribute('draggable', true);
+		img.setAttribute('ondragstart', 'dragImg(event)');
+		img.setAttribute('ondragenter', 'dragEnter(event)');
+		img.setAttribute('ondragover', 'dragOver(event)');
+		img.setAttribute('ondrop', 'dropImg(event)');
+		img.setAttribute('src', link);
+
+		imageGrid.appendChild(img);
+	});
+};
+
+/***** FUNCTION CALLED ON LOAD *****/
+placeInitialImages(imageLinks);
+
 /*=======================================================================
 
 ========================================================================*/
 
-const placeImages = (links) => {
-	links.forEach((link, index) => {
+const reorderImages = (links) => {
+		
+		links.forEach((link, index) => {
 		let element = document.getElementById(`image-${index + 1}`);
 		element.src = link;
 	});
-};
-
-placeImages(imageLinks);
+}
 
 /*=======================================================================
 
 ========================================================================*/
 
 const dragImg = (event) => {
-	console.log('hello', event);
+
 	draggedImage = event.target.attributes.src.value;
 	draggedImageIndex = event.target.id.match(/[0-9]+/)[0] - 1;
 };
@@ -49,29 +80,24 @@ const dragImg = (event) => {
 ========================================================================*/
 
 const dropImg = (event) => {
+	
 	event.preventDefault();
-	console.log('goodbye', event);
-	console.log(draggedImage);
+
 	let dropTargetIndex = event.target.id.match(/[0-9]+/)[0] - 1;
-	console.log(dropTargetIndex);
 
 	imageLinks.splice(draggedImageIndex, 1);
 	imageLinks.splice(dropTargetIndex, 0, draggedImage);
-	placeImages(imageLinks);
+	reorderImages(imageLinks);
 };
 
 /*=======================================================================
 
 ========================================================================*/
 
-const dragOver = (event) => {
-	event.preventDefault();
-};
+const dragOver = (event) => { event.preventDefault() };
 
 /*=======================================================================
 
 ========================================================================*/
 
-const dragEnter = (event) => {
-	event.preventDefault();
-};
+const dragEnter = (event) => { event.preventDefault() };
